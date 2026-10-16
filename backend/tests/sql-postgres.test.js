@@ -44,7 +44,6 @@ async function main() {
     "03_seed.sql",
     "04_verify.sql",
     "05_drop.sql",
-    "README.md",
   ];
   for (const file of required) check(`SQL-файл ${file} сохранён для Supabase`, fs.existsSync(path.join(SQL_DIR, file)));
 

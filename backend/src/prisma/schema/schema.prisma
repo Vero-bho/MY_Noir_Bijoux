@@ -1,0 +1,190 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique @db.VarChar(150)
+  password  String   @db.VarChar(255)
+  fullName  String   @db.VarChar(150)
+  phone     String?  @db.VarChar(30)
+  avatarUrl String?  @db.VarChar(400)
+  role      String   @default("client") @db.VarChar(20)
+  createdAt DateTime @default(now()) @db.Timestamp(3)
+
+  builds    Build[]
+  orders    Order[]
+  favorites Favorite[]
+
+  @@map("users")
+}
+
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(60)
+  slug String @unique @db.VarChar(60)
+
+  products Product[]
+
+  @@map("categories")
+}
+
+model Material {
+  id   Int    @id @default(autoincrement())
+  name String @unique @db.VarChar(80)
+
+  products   Product[]
+  components Component[]
+
+  @@map("materials")
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(150)
+  slug        String   @unique @db.VarChar(150)
+  categoryId  Int
+  materialId  Int
+  price       Decimal  @db.Decimal(10, 2)
+  imageUrl    String   @db.VarChar(400)
+  description String?  @db.VarChar(1000)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now()) @db.Timestamp(3)
+
+  category   Category    @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  material   Material    @relation(fields: [materialId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  orderItems OrderItem[]
+
+  @@index([categoryId])
+  @@index([materialId])
+  @@map("products")
+}
+
+model Component {
+  id          Int     @id @default(autoincrement())
+  name        String  @db.VarChar(150)
+  jewelryType String  @db.VarChar(30)
+  slot        String  @db.VarChar(30)
+  materialId  Int?
+  price       Decimal @db.Decimal(10, 2)
+  imageUrl    String  @db.VarChar(400)
+  layerZ      Int     @default(1)
+  isActive    Boolean @default(true)
+
+  material   Material?   @relation(fields: [materialId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  buildItems BuildItem[]
+
+  @@index([jewelryType, slot])
+  @@map("components")
+}
+
+model Build {
+  id          Int      @id @default(autoincrement())
+  userId      Int?
+  jewelryType String   @db.VarChar(30)
+  article     String   @unique @db.VarChar(50)
+  totalPrice  Decimal  @db.Decimal(10, 2)
+  createdAt   DateTime @default(now()) @db.Timestamp(3)
+
+  user       User?       @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  items      BuildItem[]
+  favorites  Favorite[]
+  orderItems OrderItem[]
+
+  @@index([userId])
+  @@map("builds")
+}
+
+model BuildItem {
+  id          Int @id @default(autoincrement())
+  buildId     Int
+  componentId Int
+  layerZ      Int @default(1)
+
+  build     Build     @relation(fields: [buildId], references: [id], onDelete: Cascade)
+  component Component @relation(fields: [componentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([buildId])
+  @@map("build_items")
+}
+
+model Order {
+  id            Int      @id @default(autoincrement())
+  orderNumber   String   @unique @db.VarChar(20)
+  userId        Int?
+  customerName  String   @db.VarChar(150)
+  phone         String   @db.VarChar(30)
+  email         String?  @db.VarChar(150)
+  deliveryType  String   @db.VarChar(20)
+  address       String?  @db.VarChar(400)
+  pickupPointId Int?
+  total         Decimal  @db.Decimal(10, 2)
+  status        String   @default("new") @db.VarChar(20)
+  comment       String?  @db.VarChar(500)
+  createdAt     DateTime @default(now()) @db.Timestamp(3)
+
+  user  User?       @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  items OrderItem[]
+
+  @@index([userId])
+  @@map("orders")
+}
+
+model OrderItem {
+  id        Int     @id @default(autoincrement())
+  orderId   Int
+  productId Int?
+  buildId   Int?
+  title     String  @db.VarChar(200)
+  price     Decimal @db.Decimal(10, 2)
+  quantity  Int     @default(1)
+
+  order   Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product? @relation(fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  build   Build?   @relation(fields: [buildId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([orderId])
+  @@map("order_items")
+}
+
+model Favorite {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  buildId   Int?
+  createdAt DateTime @default(now()) @db.Timestamp(3)
+
+  user  User   @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  build Build? @relation(fields: [buildId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([userId])
+  @@map("favorites")
+}
+
+model PickupPoint {
+  id        Int     @id @default(autoincrement())
+  kind      String  @db.VarChar(20)
+  provider  String  @db.VarChar(50)
+  city      String  @db.VarChar(80)
+  address   String  @db.VarChar(250)
+  workHours String? @db.VarChar(120)
+  phone     String? @db.VarChar(30)
+
+  @@index([kind, city])
+  @@map("pickup_points")
+}
+
+model ChatMessage {
+  id        Int      @id @default(autoincrement())
+  userId    Int?
+  room      String   @db.VarChar(60) @default("support")
+  body      String   @db.VarChar(1000)
+  createdAt DateTime @default(now()) @db.Timestamp(3)
+
+  @@index([room, createdAt])
+  @@map("chat_messages")
+}

@@ -1,0 +1,14 @@
+node_modules/
+dist/
+coverage/
+.git/
+*.log
+.env
+.env.*
+!.env.example
+src/prisma/generated/
+uploads/
+tests/
+sql-postgres/
+scripts/
+README.md

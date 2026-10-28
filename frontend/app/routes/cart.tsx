@@ -9,7 +9,7 @@ import { useCart } from "~/hooks/useCart";
 import { formatPrice } from "~/lib/format";
 
 export function meta({}: Route.MetaArgs) {
-  return [{ title: "Корзина — Noir Bijoux" }];
+  return [{ title: "Корзина — Noir Bijoux", name: "robots", content: "noindex, nofollow" }];
 }
 
 export default function CartPage() {

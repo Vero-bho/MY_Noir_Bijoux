@@ -8,7 +8,14 @@ import { useCatalogProducts } from "~/hooks/useCatalog";
 import { useFilters } from "~/hooks/useFilters";
 
 export function meta({}: Route.MetaArgs) {
-  return [{ title: "Каталог изделий — Noir Bijoux" }];
+  return [
+    { title: "Каталог украшений ручной работы — Noir Bijoux" },
+    {
+      name: "description",
+      content:
+        "Выберите авторские браслеты, колье и серьги Noir Bijoux или перейдите в конструктор и создайте своё украшение.",
+    },
+  ];
 }
 
 export default function CatalogPage() {

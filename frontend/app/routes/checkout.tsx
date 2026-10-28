@@ -17,7 +17,7 @@ import { formatPrice } from "~/lib/format";
 import type { CheckoutFormValues, DeliveryType } from "~/types";
 
 export function meta({}: Route.MetaArgs) {
-  return [{ title: "Оформление заказа — Noir Bijoux" }];
+  return [{ title: "Оформление заказа — Noir Bijoux", name: "robots", content: "noindex, nofollow" }];
 }
 
 const DELIVERY_TYPES: { value: DeliveryType; hint: string; cost: number }[] = [

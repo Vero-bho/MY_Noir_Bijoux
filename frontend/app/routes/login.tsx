@@ -7,7 +7,8 @@ import Button from "~/components/ui/Button";
 import Input from "~/components/ui/Input";
 
 export function meta({}: Route.MetaArgs) {
-  return [{ title: "Вход — Noir Bijoux" }];
+  return [{ title: "Вход — Noir Bijoux", name: "robots", content: "noindex, nofollow" }];
+  
 }
 
 export default function LoginPage() {

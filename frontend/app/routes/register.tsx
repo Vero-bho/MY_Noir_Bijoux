@@ -7,7 +7,7 @@ import Button from "~/components/ui/Button";
 import Input from "~/components/ui/Input";
 
 export function meta({}: Route.MetaArgs) {
-  return [{ title: "Регистрация — Noir Bijoux" }];
+  return [{ title: "Регистрация — Noir Bijoux", name: "robots", content: "noindex, nofollow" }];
 }
 
 export default function RegisterPage() {

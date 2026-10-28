@@ -74,7 +74,6 @@ jobs:
   build-backend:
     name: Build and publish backend image
     needs: test
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     permissions:
       contents: read
@@ -114,7 +113,6 @@ jobs:
   build-frontend:
     name: Build and publish frontend image
     needs: test
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     permissions:
       contents: read

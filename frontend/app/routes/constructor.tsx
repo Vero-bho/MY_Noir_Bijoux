@@ -7,7 +7,14 @@ import { jewelryTypes } from "~/data/catalog";
 import { handleAssetError } from "~/lib/assetFallback";
 
 export function meta({}: Route.MetaArgs) {
-  return [{ title: "Конструктор украшений — Noir Bijoux" }];
+  return [
+    { title: "Конструктор украшений — Noir Bijoux" },
+    {
+      name: "description",
+      content:
+        "Соберите украшение Noir Bijoux в онлайн-конструкторе: выберите тип изделия, основу, материалы и детали.",
+    },
+  ];
 }
 
 export default function ConstructorStartPage() {

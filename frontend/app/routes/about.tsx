@@ -6,7 +6,14 @@ import { masterInfo } from "~/data/masterInfo";
 import { handleAssetError } from "~/lib/assetFallback";
 
 export function meta({}: Route.MetaArgs) {
-  return [{ title: "О мастере — Noir Bijoux" }];
+  return [
+    { title: "О мастере — Noir Bijoux" },
+    {
+      name: "description",
+      content:
+        "Узнайте о мастере Noir Bijoux, создании авторских украшений и материалах, которые используются в работе.",
+    },
+  ];
 }
 
 export default function AboutPage() {

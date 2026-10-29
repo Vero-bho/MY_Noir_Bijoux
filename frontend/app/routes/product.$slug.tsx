@@ -11,7 +11,18 @@ import { formatPrice } from "~/lib/format";
 
 export function meta({ params }: Route.MetaArgs) {
   const product = getProductBySlug(params.slug ?? "");
-  return [{ title: product ? `${product.name} — Noir Bijoux` : "Изделие не найдено" }];
+
+  if (!product) {
+    return [
+      { title: "Изделие не найдено — Noir Bijoux" },
+      { name: "robots", content: "noindex, nofollow" },
+    ];
+  }
+
+  return [
+    { title: `${product.name} — Noir Bijoux` },
+    { name: "description", content: product.description },
+  ];
 }
 
 export default function ProductPage() {

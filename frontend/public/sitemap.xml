@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://example.com/</loc></url>
+  <url><loc>https://example.com/catalog</loc></url>
+  <url><loc>https://example.com/about</loc></url>
+  <url><loc>https://example.com/constructor</loc></url>
+  <url><loc>https://example.com/constructor/necklace</loc></url>
+  <url><loc>https://example.com/constructor/bracelet</loc></url>
+  <url><loc>https://example.com/constructor/earrings</loc></url>
+  <url><loc>https://example.com/constructor/ring</loc></url>
+  <url><loc>https://example.com/product/bracelet-dark-star</loc></url>
+  <url><loc>https://example.com/product/bracelet-lilith</loc></url>
+  <url><loc>https://example.com/product/earrings-black-rose</loc></url>
+  <url><loc>https://example.com/product/necklace-onyx-drop</loc></url>
+  <url><loc>https://example.com/product/necklace-rose</loc></url>
+</urlset>

@@ -20,6 +20,10 @@ export function createApp() {
   app.use(cors({ origin: env.corsOrigin }));
   app.use(express.json({ limit: "1mb" }));
   app.use(express.urlencoded({ extended: true }));
+  app.use("/api", (_req, res, next) => {
+  res.setHeader("X-Robots-Tag", "noindex, nofollow");
+  next();
+});
   app.use(
     "/api",
     rateLimit({
@@ -44,11 +48,6 @@ export function createApp() {
 
   app.get("/robots.txt", (_req, res) => {
   res.type("text/plain").send("User-agent: *\nDisallow: /\n");
-  });
-
-  app.use("/api", (_req, res, next) => {
-  res.setHeader("X-Robots-Tag", "noindex, nofollow");
-  next();
   });
 
   return app;

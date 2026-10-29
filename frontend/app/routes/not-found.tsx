@@ -4,7 +4,7 @@ import Layout from "~/components/Layout";
 import Button from "~/components/ui/Button";
 
 export function meta({}: Route.MetaArgs) {
-  return [{ title: "Страница не найдена — Noir Bijoux" }];
+  return [{ title: "Страница не найдена — Noir Bijoux", name: "robots", content: "noindex, nofollow"}];
 }
 
 export default function NotFoundPage() {

@@ -42,5 +42,14 @@ export function createApp() {
   app.use(notFound);
   app.use(errorHandler);
 
+  app.get("/robots.txt", (_req, res) => {
+  res.type("text/plain").send("User-agent: *\nDisallow: /\n");
+  });
+
+  app.use("/api", (_req, res, next) => {
+  res.setHeader("X-Robots-Tag", "noindex, nofollow");
+  next();
+  });
+
   return app;
 }

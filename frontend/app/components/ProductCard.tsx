@@ -16,7 +16,14 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <article className="flex flex-col overflow-hidden rounded-2xl border border-brand-plum bg-brand-purple/40 transition-colors hover:border-brand-mauve">
       <Link to={`/product/${product.slug}`} className="block">
-        <img src={product.image} alt={product.name} onError={(event) => handleAssetError(event, product.image)} className="h-64 w-full object-cover" />
+        <img
+          src={product.image}
+          alt={product.name}
+          loading="lazy"
+          decoding="async"
+          onError={(event) => handleAssetError(event, product.image)}
+          className="h-64 w-full object-cover"
+      />      
       </Link>
 
       <div className="flex flex-1 flex-col p-5">
